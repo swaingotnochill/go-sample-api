@@ -8,7 +8,6 @@ import (
 	"github.com/swaingotnochill/tempmee/bootstrap"
 )
 
-
 func main() {
 
 	app := bootstrap.App()

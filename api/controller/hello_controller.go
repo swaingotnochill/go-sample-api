@@ -8,10 +8,9 @@ import (
 	"github.com/swaingotnochill/tempmee/domain"
 )
 
-
 type HelloController struct {
 	HelloUsecase domain.HelloUsecase
-	Env *bootstrap.Env
+	Env          *bootstrap.Env
 }
 
 func (hc *HelloController) PrintHello(c *gin.Context) {

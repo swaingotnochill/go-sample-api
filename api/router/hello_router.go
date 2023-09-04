@@ -13,9 +13,9 @@ import (
 
 func NewHelloRouter(env *bootstrap.Env, timeout time.Duration, db *mongo.Database, group *gin.RouterGroup) {
 	ur := repository.NewHelloRepository(db, "")
-	sc := controller.HelloController{
+	hc := controller.HelloController{
 		HelloUsecase: usecase.NewHelloUseCase(ur, timeout),
-		Env : env,
+		Env:          env,
 	}
-	group.GET("/hello", sc.PrintHello)
+	group.GET("/hello", hc.PrintHello)
 }

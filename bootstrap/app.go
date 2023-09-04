@@ -3,7 +3,7 @@ package bootstrap
 import "go.mongodb.org/mongo-driver/mongo"
 
 type Application struct {
-	Env *Env
+	Env   *Env
 	Mongo mongo.Client
 }
 

@@ -9,4 +9,3 @@ type HelloUsecase interface {
 type HelloRepository interface {
 	PrintHello(c context.Context) error
 }
-

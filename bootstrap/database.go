@@ -11,9 +11,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-
 func NewMongoDatabase(env *Env) *mongo.Client {
-	ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	dbHost := env.DBHost
@@ -22,7 +21,7 @@ func NewMongoDatabase(env *Env) *mongo.Client {
 	dbPass := env.DBPass
 
 	mongodbURI := fmt.Sprintf("mongodb://%s:%s@%s:%s", dbUser, dbPass, dbHost, dbPort)
-	
+
 	if dbUser == "" || dbPass == "" {
 		mongodbURI = fmt.Sprintf("mongodb://%s:%s", dbHost, dbPort)
 	}

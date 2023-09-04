@@ -18,5 +18,5 @@ func SetUp(env *bootstrap.Env, timeout time.Duration, db *mongo.Database, gin *g
 	publicRouter := gin.Group("")
 	// List of all Public APIs.
 	NewHelloRouter(env, timeout, db, publicRouter)
+	NewBookRouter(env, timeout, db, publicRouter)
 }
-

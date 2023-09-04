@@ -9,13 +9,13 @@ import (
 )
 
 type helloRepository struct {
-	database *mongo.Database
+	database   *mongo.Database
 	collection string
 }
 
 func NewHelloRepository(db *mongo.Database, collection string) domain.HelloRepository {
 	return &helloRepository{
-		database: db,
+		database:   db,
 		collection: collection,
 	}
 }
