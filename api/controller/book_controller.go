@@ -11,7 +11,7 @@ import (
 
 type BookController struct {
 	BookUseCase domain.BookUseCase
-	Env *bootstrap.Env
+	Env         *bootstrap.Env
 }
 
 func (bc *BookController) GetBooks(c *gin.Context) {
@@ -24,7 +24,7 @@ func (bc *BookController) GetBooks(c *gin.Context) {
 }
 
 func (bc *BookController) GetBookById(c *gin.Context) {
-	id := c.Param("id")	
+	id := c.Param("id")
 
 	book, err := bc.BookUseCase.GetBooksByID(c, id)
 	if err != nil {

@@ -46,5 +46,3 @@ func (bu *bookUsecase) SaveBook(c context.Context, book *domain.Book) error {
 	defer cancel()
 	return bu.bookRepository.SaveBook(ctx, book)
 }
-
-

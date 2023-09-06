@@ -16,7 +16,7 @@ func NewBookRouter(env *bootstrap.Env, timeout time.Duration, db *mongo.Database
 	br := repository.NewBookRepository(db, domain.CollectionBook)
 	bc := controller.BookController{
 		BookUseCase: usecase.NewBookUsecase(br, timeout),
-		Env:          env,
+		Env:         env,
 	}
 
 	group.GET("/books", bc.GetBooks)

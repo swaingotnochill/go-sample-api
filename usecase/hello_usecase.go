@@ -9,13 +9,13 @@ import (
 
 type helloUsecase struct {
 	helloRepository domain.HelloRepository
-	contextTimeout time.Duration
+	contextTimeout  time.Duration
 }
 
 func NewHelloUseCase(helloRepository domain.HelloRepository, timeout time.Duration) domain.HelloUsecase {
-	return &helloUsecase {
+	return &helloUsecase{
 		helloRepository: helloRepository,
-		contextTimeout: timeout,
+		contextTimeout:  timeout,
 	}
 }
 

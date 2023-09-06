@@ -26,7 +26,7 @@ func (br *bookRepository) DeleteBook(c context.Context, id string) error {
 	collection := br.database.Collection(br.collection)
 	idHex, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return  err
+		return err
 	}
 
 	filter := bson.M{"_id": idHex}
@@ -57,7 +57,7 @@ func (br *bookRepository) GetBooks(c context.Context) ([]*domain.Book, error) {
 
 // GetBooksByID implements domain.BookRepository.
 func (br *bookRepository) GetBooksByID(c context.Context, id string) (*domain.Book, error) {
-	collection :=  br.database.Collection(br.collection)
+	collection := br.database.Collection(br.collection)
 
 	var book domain.Book
 
@@ -72,8 +72,7 @@ func (br *bookRepository) GetBooksByID(c context.Context, id string) (*domain.Bo
 
 // SaveBook implements domain.BookRepository.
 func (br *bookRepository) SaveBook(c context.Context, book *domain.Book) error {
-	collection :=  br.database.Collection(br.collection)
+	collection := br.database.Collection(br.collection)
 	_, err := collection.InsertOne(c, book)
 	return err
 }
-

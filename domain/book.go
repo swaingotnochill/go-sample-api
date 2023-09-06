@@ -11,10 +11,10 @@ const (
 )
 
 type Book struct {
-	ID       primitive.ObjectID  `bson:"_id"`
-	Title    string  `bson:"title"`
-	Author   string  `bson:"author"`
-	Price    float64 `bson:"price"`
+	ID     primitive.ObjectID `bson:"_id"`
+	Title  string             `bson:"title"`
+	Author string             `bson:"author"`
+	Price  float64            `bson:"price"`
 }
 
 type BookRepository interface {
