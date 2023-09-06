@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/swaingotnochill/tempmee/domain"
 	"go.mongodb.org/mongo-driver/bson"
@@ -24,8 +25,13 @@ func NewUserRepository(db *mongo.Database, collection string) domain.UserReposit
 
 func (ur *userRepository) Create(c context.Context, user *domain.User) error {
 	collection := ur.database.Collection(ur.collection)
-
-	_, err := collection.InsertOne(c, user)
+	
+	var User domain.User
+	err := collection.FindOne(c, bson.M{"email": user.Email}).Decode(&User)
+	if err == nil {
+		return fmt.Errorf("user already present. please login")
+	}
+	_, err = collection.InsertOne(c, user)
 
 	return err
 }

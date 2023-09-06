@@ -19,6 +19,12 @@ func NewOrderUseCase(orderRepository domain.OrderRepository, timeout time.Durati
 	}
 }
 
+func (ou *orderUsecase) GetBookById(c context.Context, id string) (*domain.Book, error) {
+	ctx, cancel := context.WithTimeout(c, ou.contextTimeout)
+	defer cancel()
+	return ou.orderRepository.GetBookById(ctx, id)
+}
+
 func (ou *orderUsecase) GetAllOrders(c context.Context) ([]*domain.Order, error) {
 	ctx, cancel := context.WithTimeout(c, ou.contextTimeout)
 	defer cancel()

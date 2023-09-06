@@ -21,6 +21,20 @@ func NewOrderRepository(db *mongo.Database, collection string) domain.OrderRepos
 	}
 }
 
+func (or *orderRepository) GetBookById(c context.Context, id string) (*domain.Book, error) {
+	collection := or.database.Collection(domain.CollectionBook)
+
+	var book domain.Book
+
+	idHex, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return &book, err
+	}
+
+	err = collection.FindOne(c, bson.M{"_id": idHex}).Decode(&book)
+	return &book, err
+}
+
 func (or *orderRepository) GetAllOrders(c context.Context) ([]*domain.Order, error) {
 	collection := or.database.Collection(or.collection)
 

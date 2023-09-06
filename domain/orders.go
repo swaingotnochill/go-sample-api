@@ -8,17 +8,17 @@ import (
 )
 
 const (
-	CollectionOrders = "orders"
+	CollectionOrders = "order"
 )
 
 type OrderRequest struct {
-	BookIDs []string `form:"books" binding:"required"`
+	Books []string `form:"books" binding:"required"`
 }
 
 type Order struct {
 	ID          primitive.ObjectID   `bson:"_id"`
 	CustomerID  primitive.ObjectID   `bson:"customer_id"`
-	BookIDs     []primitive.ObjectID `bson:"book_ids"`
+	BookIDs     []string `bson:"book_ids"`
 	TotalAmount float64              `bson:"total_amount"`
 	CreatedAt   time.Time            `bson:"created_at"`
 }
@@ -28,6 +28,7 @@ type OrderRepository interface {
 	CreateOrder(c context.Context, order *Order) error
 	GetOrderByID(c context.Context, id string) (*Order, error)
 	GetOrdersByCustomerID(c context.Context, id string) ([]*Order, error)
+	GetBookById(c context.Context, id string) (*Book, error)
 }
 
 type OrderUseCase interface {
@@ -35,4 +36,5 @@ type OrderUseCase interface {
 	CreateOrder(c context.Context, order *Order) error
 	GetOrderByID(c context.Context, id string) (*Order, error)
 	GetOrdersByCustomerID(c context.Context, id string) ([]*Order, error)
+	GetBookById(c context.Context, id string) (*Book, error)
 }

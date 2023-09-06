@@ -20,7 +20,7 @@ func NewOrderRouter(env *bootstrap.Env, timeout time.Duration, db *mongo.Databas
 	}
 
 	group.GET("/orders/:id", oc.GetOrderByID)
-	group.GET("/orders/customer/:id", oc.GetOrdersByCustomerID)
+	group.GET("/orders/history", oc.GetOrdersByCustomerID)
 	group.POST("/orders", oc.CreateOrder)
 	group.GET("/orders", oc.GetAllOrders)
 }
