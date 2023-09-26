@@ -55,5 +55,112 @@ func TestGetBooks(t *testing.T) {
 
 		mockBookRepository.AssertExpectations(t)
 	})
+}
 
+
+func TestGetBooksByID(t *testing.T) {
+	mockBookRepository := new(mocks.BookRepository)
+
+	bookObjectID := primitive.NewObjectID()
+	bookID := bookObjectID.Hex()
+
+
+	t.Run("success", func (t *testing.T) {
+		mockBook := &domain.Book{
+			ID : bookObjectID,
+			Title: "Dummy Title",
+			Author : "Dummy Author",
+			Price: 1.23,
+		}
+
+		mockBookRepository.On("GetBooksByID", mock.Anything, bookID).Return(mockBook, nil).Once()
+
+		bu := usecase.NewBookUsecase(mockBookRepository, time.Second * 2)
+
+		book, err := bu.GetBooksByID(context.Background(), bookID)
+
+		assert.NoError(t, err)
+		assert.NotNil(t, book)
+		assert.Equal(t, book, mockBook)
+
+		mockBookRepository.AssertExpectations(t)
+	})
+
+	t.Run("error", func (t *testing.T) {
+		mockBookRepository.On("GetBooksByID", mock.Anything, bookID).Return(nil, errors.New("Unexpected")).Once()
+
+		bu := usecase.NewBookUsecase(mockBookRepository, time.Second * 2)
+
+		book, err := bu.GetBooksByID(context.Background(), bookID)
+
+		assert.Error(t , err)
+		assert.Nil(t, book)
+
+		mockBookRepository.AssertExpectations(t)
+	})
+}
+
+func TestDeleteBook(t *testing.T) {
+	mockBookRepository := new(mocks.BookRepository)
+
+	bookObjectID := primitive.NewObjectID()
+	bookID := bookObjectID.Hex()
+
+	t.Run("success", func (t *testing.T) {
+		mockBookRepository.On("DeleteBook", mock.Anything, bookID).Return(nil).Once()
+
+		bu := usecase.NewBookUsecase(mockBookRepository, time.Second * 2)
+
+		err := bu.DeleteBook(context.Background(), bookID)
+
+		assert.NoError(t, err)
+
+		mockBookRepository.AssertExpectations(t)
+	})
+	t.Run("error", func (t *testing.T) {
+		mockBookRepository.On("DeleteBook", mock.Anything, bookID).Return(errors.New("Unexpected")).Once()
+
+		bu := usecase.NewBookUsecase(mockBookRepository, time.Second * 2)
+
+		err := bu.DeleteBook(context.Background(), bookID)
+
+		assert.Error(t, err)
+
+		mockBookRepository.AssertExpectations(t)
+	})
+}
+
+func TestSaveBook(t *testing.T) {
+	mockBookRepository := new(mocks.BookRepository)
+
+	bookObjectID := primitive.NewObjectID()
+
+	mockBook := &domain.Book {
+		ID : bookObjectID,
+		Title : "Dummy Title",
+		Author: "Dummy Author",
+		Price : 1.23,
+	}
+
+	t.Run("success", func (t *testing.T){
+		mockBookRepository.On("SaveBook", mock.Anything, mockBook).Return(nil).Once()
+
+		bu := usecase.NewBookUsecase(mockBookRepository, time.Second * 2)
+
+		err := bu.SaveBook(context.Background(), mockBook)
+		assert.NoError(t, err)
+
+		mockBookRepository.AssertExpectations(t)
+	})
+	t.Run("error", func (t *testing.T){
+		mockBookRepository.On("SaveBook", mock.Anything, mockBook).Return(errors.New("Unexpected")).Once()
+
+		bu := usecase.NewBookUsecase(mockBookRepository, time.Second * 2)
+
+		err := bu.SaveBook(context.Background(), mockBook)
+
+		assert.Error(t, err)
+
+		mockBookRepository.AssertExpectations(t)
+	})
 }
